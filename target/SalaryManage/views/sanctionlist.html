@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>奖罚管理</title>
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+        <link rel="stylesheet" href="layui/css/layui.css"/>
+    
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <div th:replace="header :: header"></div>
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>奖罚管理</legend>
+                </fieldset>
+                <div class="layui-row layui-col-space1">
+                    <div class="layui-row layui-col-space10">
+                        <div class="layui-col-md9">
+                            <div class="grid-demo grid-demo-bg1">
+                                <h2>员工列表</h2>
+                                <table class="layui-table"
+                                       lay-data="{height:400, limit:15,limits:[15,30,50,70,100], url:'empdata', page:true, id:'idTest',toolbar: 'default'}"
+                                       lay-filter="demo">
+                                    <thead>
+                                    <tr>
+                                        <th lay-data="{type:'checkbox',fixed: 'left'}"></th>
+                                        <th lay-data="{field:'empid',sort: true, fixed: true}">员工编号</th>
+                                        <th lay-data="{field:'empname'}">员工姓名</th>
+                                        <th lay-data="{field:'empsex',sort: true}">性别</th>
+                                        <th lay-data="{field:'empage'}">年龄</th>
+                                        <th lay-data="{field:'certid'}">证件号码</th>
+                                        <th lay-data="{field:'entrydate',templet:'#toData'}">入职日期</th>
+                                        <th lay-data="{field:'deptname'}">部门名称</th>
+                                        <th lay-data="{fixed: 'right', width:250, align:'center', toolbar: '#barDemo'}"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                                <h2>奖罚信息列表</h2>
+                                <table class="layui-table"
+                                       lay-data="{height:300, limit:15,limits:[15,30,50,70,100], url:'sanctiondata', page:true, id:'sanctionTable',toolbar: 'default'}"
+                                       lay-filter="demo">
+                                    <thead>
+                                    <tr>
+                                        <th lay-data="{type:'checkbox',fixed: 'left'}"></th>
+                                        <th lay-data="{field:'empid',sort: true, fixed: true}">员工编号</th>
+                                        <th lay-data="{field:'empname'}">员工姓名</th>
+                                        <th lay-data="{field:'finedescript',edit:'text'}">扣款说明</th>
+                                        <th lay-data="{field:'fine',edit:'text',sort: true}">扣款金额</th>
+                                        <th lay-data="{field:'rewarddescript',edit:'text'}">奖励说明</th>
+                                        <th lay-data="{field:'reward',edit:'text',sort: true}">奖励金额</th>
+                                        <th lay-data="{field:'sanctiontime'}">奖罚月份</th>
+                                        <th lay-data="{fixed: 'right', width:250, align:'center', toolbar: '#barDemo1'}"></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <div class="grid-demo">
+                                <div class="demoTable">
+                                    <span style="font-size: 16px;font-family: 'Microsoft YaHei UI';">搜索员工姓名：</span>
+                                    <div class="layui-inline">
+                                        <input class="layui-input" style="display: inline-block;" name="name" id="demoReload" autocomplete="off">
+                                    </div>
+                                    <button type="button" class="layui-btn" data-type="reload">搜索</button>
+                                </div>
+                                <h2 style="color: #4E5465">录入奖罚信息</h2>
+                                <form class="layui-form layui-form-pane" action="addSanction" method="post">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">员工姓名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="hidden" id="toempid" value="" name="empid" >
+                                            <input type="text" name="empname" id="toempname"  readonly="readonly" value="" placeholder="请点击员工列表奖罚录入" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">奖励金额</label>
+                                        <div class="layui-input-inline">
+                                            <input type="number" name="reward" id="reward"  placeholder="请输入" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">奖励说明</label>
+                                        <div class="layui-input-block">
+                                            <textarea name="rewarddescript" id="rewarddescript"   placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">扣款金额</label>
+                                        <div class="layui-input-inline">
+                                            <input type="number" name="fine" id="fine"  placeholder="请输入" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">扣款说明</label>
+                                        <div class="layui-input-block">
+                                            <textarea name="finedescript" id="finedescript"   placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">奖罚月份</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="text" name="sanctiontime" value="" class="layui-input" id="test3" placeholder="yyyy-MM">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span style="color:red; font-size: 16px" th:text="${sanctionAddMsg}"></span><br>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn sub-but" lay-submit="" lay-filter="demo1">立即提交</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+    
+                </div>
+                
+                
+                
+            </div>
+            
+            <div class="layui-footer">
+                <!-- 底部固定区域 -->
+                © 基于SSM的企业工资管理系统
+            </div>
+        </div>
+        <script src="layui/layui.js" charset="UTF-8"></script>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="addSanction">奖罚录入</a>
+        </script>
+        <script type="text/html" id="barDemo1">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="saveSanction">保存</a>
+            <a class="layui-btn layui-btn-xs" lay-event="delSanction">删除</a>
+        </script>
+        <script type="text/html" id="toData">
+            {{#
+            return layui.util.toDateString(d.entrydate, 'yyyy-MM-dd')
+            }}
+        </script>
+        <script>
+            layui.use('laydate', function() {
+                var laydate = layui.laydate;
+                //年月选择器
+                laydate.render({
+                    elem: '#test3'
+                    ,type: 'month'
+                });
+            });
+            // 数据表格
+            layui.use('table', function () {
+                var table = layui.table;
+                //监听表格复选框选择
+                table.on('checkbox(demo)', function (obj) {
+                    console.log(obj)
+                });
+                //监听单元格编辑
+                table.on('edit(demo)', function(obj){
+                    var value = obj.value //得到修改后的值
+                        ,data = obj.data //得到所在行所有键值
+                        ,field = obj.field; //得到字段
+                    // layer.msg('[ID: '+ data.empid +'] ' + field + ' 字段更改为：'+ value);
+                });
+                //监听工具条
+                table.on('tool(demo)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'detail') {
+                        // layer.msg('ID：' + data.id + ' 的查看操作');
+                        layer.open({
+                            type: 1
+                            ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                            ,id: 'layerDemo' //防止重复弹出
+                            ,content: '<div style="padding: 20px 100px;"><ul><li>员工编号：'+data.empid+'</li><li>员工姓名：'+data.empname+'</li><li>年龄：'+data.empage+'</li><li>性别：'+data.empsex+'</li><li>身份证号：'+data.certid+'</li><li>入职日期：'+(layui.util.toDateString(data.entrydate, 'yyyy年MM月dd日'))+'</li><li>部门名称：'+data.deptname+'</li></ul></div>'
+                            ,btn: '关闭全部'
+                            ,btnAlign: 'c' //按钮居中
+                            ,shade: 0.3 //0不显示遮罩
+                            ,yes: function(){
+                                layer.closeAll();
+                            }
+                        });
+                    } else if (obj.event === 'delSanction') {
+                        layer.confirm('真的删除行么', function (index) {
+                            window.location.href="deleteSanction?empid="+data.empid+'&sanctiontime='+data.sanctiontime;
+                            layer.alert('删除行：<br>' + JSON.stringify(data));
+                            obj.del();
+                            
+                        });
+                    } else if (obj.event === 'saveSanction') {
+                        // window.location.href='openEditEmpPage?empid='+data.empid;
+                        if (!isNaN(data.reward)&&!isNaN(data.fine)){
+                            if (data.finedescript.length<255&&data.rewarddescript.length<255){
+                                    table.reload('sanctionTable', {
+                                        url:'saveSanction'
+                                        , method:'post'
+                                        , page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                        , where: {
+                                            empid: data.empid,
+                                            empname: data.empname,
+                                            finedescript: data.finedescript,
+                                            fine: data.fine,
+                                            rewarddescript: data.rewarddescript,
+                                            reward: data.reward,
+                                            sanctiontime: data.sanctiontime
+                                        }
+                                    });
+                            }else {
+                                layer.msg('你输入的说明过长，请控制在255个字符')
+                            }
+                            
+                        }else{
+                            layer.msg('你输入的金额不是数字！')
+                        }
+                        
+                        // window.location.href='saveAttend?empid='+data.empid+'&description='+data.description+'&absenteeismday='+data.absenteeismday+'&fine='+data.fine;
+                    } else if (obj.event === 'addSanction') {
+                        $('#toempid').val(data.empid);
+                        $('#toempname').val(data.empname);
+                        // layer.alert('编辑行：<br>' + JSON.stringify(data))
+                    }
+                });
+                
+                var $ = layui.$, active = {
+                    newEmp: function () { //获取选中数据
+                        window.location.href = "openAddEmpPage";
+                    }, getCheckData: function () { //获取选中数据
+                        var checkStatus = table.checkStatus('idTest')
+                            , data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                    }
+                    , getCheckLength: function () { //获取选中数目
+                        var checkStatus = table.checkStatus('idTest')
+                            , data = checkStatus.data;
+                        layer.msg('选中了：' + data.length + ' 个');
+                    }
+                    , isAll: function () { //验证是否全选
+                        var checkStatus = table.checkStatus('idTest');
+                        layer.msg(checkStatus.isAll ? '全选' : '未全选')
+                    }
+                    , reload: function () {
+                        var demoReload = $('#demoReload');
+                        //执行重载
+                        table.reload('idTest', {
+                            url:'byEmpNameReloadData'
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                            , where: {
+                                empname: demoReload.val()
+                            }
+                        });
+                    }
+                };
+                
+                $('.demoTable .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+            //JavaScript代码区域
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+        </script>
+    </body>
+</html>

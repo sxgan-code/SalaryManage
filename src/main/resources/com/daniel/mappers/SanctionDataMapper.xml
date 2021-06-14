@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daniel.mappers.SanctionDataMapper">
+  <resultMap id="BaseResultMap" type="com.daniel.domain.SanctionData">
+    <!--@mbg.generated-->
+    <!--@Table sanction_data-->
+    <id column="empid" jdbcType="INTEGER" property="empid" />
+    <id column="sanctiontime" jdbcType="VARCHAR" property="sanctiontime" />
+    <result column="empname" jdbcType="VARCHAR" property="empname" />
+    <result column="finedescript" jdbcType="VARCHAR" property="finedescript" />
+    <result column="fine" jdbcType="DECIMAL" property="fine" />
+    <result column="rewarddescript" jdbcType="VARCHAR" property="rewarddescript" />
+    <result column="reward" jdbcType="DECIMAL" property="reward" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    empid, sanctiontime, empname, finedescript, fine, rewarddescript, reward
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sanction_data
+    where empid = #{empid,jdbcType=INTEGER}
+      and sanctiontime = #{sanctiontime,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    <!--@mbg.generated-->
+    delete from sanction_data
+    where empid = #{empid,jdbcType=INTEGER}
+      and sanctiontime = #{sanctiontime,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.daniel.domain.SanctionData">
+    <!--@mbg.generated-->
+    insert into sanction_data (empid, sanctiontime, empname, 
+      finedescript, fine, rewarddescript, 
+      reward)
+    values (#{empid,jdbcType=INTEGER}, #{sanctiontime,jdbcType=VARCHAR}, #{empname,jdbcType=VARCHAR}, 
+      #{finedescript,jdbcType=VARCHAR}, #{fine,jdbcType=DECIMAL}, #{rewarddescript,jdbcType=VARCHAR}, 
+      #{reward,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daniel.domain.SanctionData">
+    <!--@mbg.generated-->
+    insert into sanction_data
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empid != null">
+        empid,
+      </if>
+      <if test="sanctiontime != null">
+        sanctiontime,
+      </if>
+      <if test="empname != null">
+        empname,
+      </if>
+      <if test="finedescript != null">
+        finedescript,
+      </if>
+      <if test="fine != null">
+        fine,
+      </if>
+      <if test="rewarddescript != null">
+        rewarddescript,
+      </if>
+      <if test="reward != null">
+        reward,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empid != null">
+        #{empid,jdbcType=INTEGER},
+      </if>
+      <if test="sanctiontime != null">
+        #{sanctiontime,jdbcType=VARCHAR},
+      </if>
+      <if test="empname != null">
+        #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="finedescript != null">
+        #{finedescript,jdbcType=VARCHAR},
+      </if>
+      <if test="fine != null">
+        #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test="rewarddescript != null">
+        #{rewarddescript,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daniel.domain.SanctionData">
+    <!--@mbg.generated-->
+    update sanction_data
+    <set>
+      <if test="empname != null">
+        empname = #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="finedescript != null">
+        finedescript = #{finedescript,jdbcType=VARCHAR},
+      </if>
+      <if test="fine != null">
+        fine = #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test="rewarddescript != null">
+        rewarddescript = #{rewarddescript,jdbcType=VARCHAR},
+      </if>
+      <if test="reward != null">
+        reward = #{reward,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where empid = #{empid,jdbcType=INTEGER}
+      and sanctiontime = #{sanctiontime,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daniel.domain.SanctionData">
+    <!--@mbg.generated-->
+    update sanction_data
+    set empname = #{empname,jdbcType=VARCHAR},
+      finedescript = #{finedescript,jdbcType=VARCHAR},
+      fine = #{fine,jdbcType=DECIMAL},
+      rewarddescript = #{rewarddescript,jdbcType=VARCHAR},
+      reward = #{reward,jdbcType=DECIMAL}
+    where empid = #{empid,jdbcType=INTEGER}
+      and sanctiontime = #{sanctiontime,jdbcType=VARCHAR}
+  </update>
+</mapper>

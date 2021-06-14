@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daniel.mappers.DeptInfoMapper">
+  <resultMap id="BaseResultMap" type="com.daniel.domain.DeptInfo">
+    <!--@Table dept_info-->
+    <id column="deptid" jdbcType="INTEGER" property="deptid" />
+    <result column="deptname" jdbcType="VARCHAR" property="deptname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    deptid, deptname
+  </sql>
+  
+  <select id="totalCountDept"  resultType="java.lang.Integer">
+    select
+    count(*)
+    from dept_info
+  </select>
+  <select id="totalCountEmp"  resultType="java.lang.Integer">
+    select
+    count(*)
+    from emp_info
+  </select>
+  <update id="updateEmpinfoDept" parameterType="java.lang.Integer">
+    update emp_info set deptid = 9999 where deptid=#{deptid}
+  </update>
+  <select id="getDeptByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dept_info where deptname = #{deptname}
+  </select>
+  
+  <select id="selectDeptList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dept_info
+  </select>
+  <select id="selectDeptLikeNameList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dept_info where deptname like concat('%',#{deptname},'%')
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dept_info
+    where deptid = #{deptid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dept_info
+    where deptid = #{deptid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.daniel.domain.DeptInfo">
+    insert into dept_info (deptid, deptname)
+    values (#{deptid,jdbcType=INTEGER}, #{deptname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daniel.domain.DeptInfo">
+    insert into dept_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="deptid != null">
+        deptid,
+      </if>
+      <if test="deptname != null">
+        deptname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="deptid != null">
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="deptname != null">
+        #{deptname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daniel.domain.DeptInfo">
+    update dept_info
+    <set>
+      <if test="deptname != null">
+        deptname = #{deptname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where deptid = #{deptid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daniel.domain.DeptInfo">
+    update dept_info
+    set deptname = #{deptname,jdbcType=VARCHAR}
+    where deptid = #{deptid,jdbcType=INTEGER}
+  </update>
+</mapper>

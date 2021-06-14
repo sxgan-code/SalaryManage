@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>员工列表</title>
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+        <link rel="stylesheet" href="layui/css/layui.css"/>
+    
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <div th:replace="header :: header"></div>
+            
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                    <legend>员工管理列表</legend>
+                </fieldset>
+                <div class="layui-btn-container demoTable">
+                    <button class="layui-btn layui-btn-normal" style="margin-left: 50px"  data-type="newEmp">录入员工信息</button>
+                    <button class="layui-btn layui-btn-normal"  data-type="getCheckData">获取选中行数据</button>
+                    <button class="layui-btn layui-btn-normal"  data-type="getCheckLength">获取选中数目</button>
+                    <button class="layui-btn layui-btn-normal"  data-type="isAll">验证是否全选</button>
+                </div>
+                <div class="demoTable">
+                    <span style="font-size: 16px;font-family: 'Microsoft YaHei UI';">搜索员工姓名：</span>
+                    <div class="layui-inline">
+                        <input class="layui-input" style="display: inline-block;" name="name" id="demoReload" autocomplete="off">
+                    </div>
+                    <button type="button" class="layui-btn" data-type="reload">搜索</button>
+                </div>
+                <table class="layui-table"
+                       lay-data="{height:750, limit:30,limits:[15,30,50,70,100], url:'empdata', page:true, id:'idTest',toolbar: 'default'}"
+                       lay-filter="demo">
+                    <thead>
+                    <tr>
+                        <th lay-data="{type:'checkbox',fixed: 'left'}"></th>
+                        <th lay-data="{field:'empid',sort: true, fixed: true}">员工编号</th>
+                        <th lay-data="{field:'empname'}">员工姓名</th>
+                        <th lay-data="{field:'empsex',sort: true}">性别</th>
+                        <th lay-data="{field:'empage'}">年龄</th>
+                        <th lay-data="{field:'certid'}">证件号码</th>
+                        <th lay-data="{field:'entrydate',templet:'#toData'}">入职日期</th>
+                        <th lay-data="{field:'deptname'}">部门名称</th>
+                        <th lay-data="{fixed: 'right', width:250, align:'center', toolbar: '#barDemo'}"></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+            
+            <div class="layui-footer">
+                <!-- 底部固定区域 -->
+                © 基于SSM的企业工资管理系统
+            </div>
+        </div>
+        <script src="layui/layui.js" charset="UTF-8"></script>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs" lay-event="addSalary">录入薪资</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <script type="text/html" id="toData">
+            {{#
+            return layui.util.toDateString(d.entrydate, 'yyyy-MM-dd')
+            }}
+        </script>
+        <script>
+            // 数据表格
+            layui.use('table', function () {
+                var table = layui.table;
+                //监听表格复选框选择
+                table.on('checkbox(demo)', function (obj) {
+                    console.log(obj)
+                });
+                //监听工具条
+                table.on('tool(demo)', function (obj) {
+                    var data = obj.data;
+                    if (obj.event === 'detail') {
+                        // layer.msg('ID：' + data.id + ' 的查看操作');
+                        layer.open({
+                            type: 1
+                            ,offset: 'auto' //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+                            ,id: 'layerDemo' //防止重复弹出
+                            ,content: '<div style="padding: 20px 100px;"><ul><li>员工编号：'+data.empid+'</li><li>员工姓名：'+data.empname+'</li><li>年龄：'+data.empage+'</li><li>性别：'+data.empsex+'</li><li>身份证号：'+data.certid+'</li><li>入职日期：'+(layui.util.toDateString(data.entrydate, 'yyyy年MM月dd日'))+'</li><li>部门名称：'+data.deptname+'</li></ul></div>'
+                            ,btn: '关闭全部'
+                            ,btnAlign: 'c' //按钮居中
+                            ,shade: 0.3 //0不显示遮罩
+                            ,yes: function(){
+                                layer.closeAll();
+                            }
+                        });
+                    } else if (obj.event === 'del') {
+                        layer.confirm('真的删除行么', function (index) {
+                            window.location.href="deleteEmp?empid="+data.empid;
+                            obj.del();
+                            // layer.close(index);
+                            layer.msg('ID为：' + data.empid + ' 的用户已经删除!!!');
+                        });
+                    } else if (obj.event === 'edit') {
+                        window.location.href='openEditEmpPage?empid='+data.empid;
+                        // layer.alert('编辑行：<br>' + JSON.stringify(data))
+                    } else if (obj.event === 'addSalary') {
+                        window.location.href='openAddSalaryPage?empid='+data.empid;
+                        // layer.alert('编辑行：<br>' + JSON.stringify(data))
+                    }
+                });
+                
+                var $ = layui.$, active = {
+                    newEmp: function () { //获取选中数据
+                        window.location.href = "openAddEmpPage";
+                    }, getCheckData: function () { //获取选中数据
+                        var checkStatus = table.checkStatus('idTest')
+                            , data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                    }
+                    , getCheckLength: function () { //获取选中数目
+                        var checkStatus = table.checkStatus('idTest')
+                            , data = checkStatus.data;
+                        layer.msg('选中了：' + data.length + ' 个');
+                    }
+                    , isAll: function () { //验证是否全选
+                        var checkStatus = table.checkStatus('idTest');
+                        layer.msg(checkStatus.isAll ? '全选' : '未全选')
+                    }
+                    , reload: function () {
+                        var demoReload = $('#demoReload');
+                        //执行重载
+                        table.reload('idTest', {
+                            url:'byEmpNameReloadData'
+                            , page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                            , where: {
+                                empname: demoReload.val()
+                            }
+                        });
+                    }
+                };
+                
+                $('.demoTable .layui-btn').on('click', function () {
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            });
+            //JavaScript代码区域
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+        </script>
+    </body>
+</html>

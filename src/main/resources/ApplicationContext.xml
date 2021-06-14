@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--    开启扫描，只扫描service和dao层，controller不需spring扫描-->
+    <context:component-scan base-package="com.daniel">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!--    spring整合mybatis-->
+    <!--    加载配置文件db.properties-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--    配置连接池-->
+    <bean id="dataSource" class="${comboPooledDataSource}">
+        <property name="driverClass" value="${mysql.jdbc.driver}"/>
+        <property name="jdbcUrl" value="${mysql.jdbc.url}"/>
+        <property name="user" value="${mysql.jdbc.user}"/>
+        <property name="password" value="${mysql.jdbc.pow}"/>
+    </bean>
+    <!--    配置SqlSessionFactoryBean工厂-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/daniel/mappers/*.xml"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>helperDialect=mysql</value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!--    配置接口所在包-->
+    <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.daniel.mappers"/>
+    </bean>
+    <!--    配置声明式事务-->
+    <!--    配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--    配置事务通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="*" isolation="DEFAULT"/>
+        </tx:attributes>
+    </tx:advice>
+    <!--    配置AOP增强-->
+    <aop:config>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.daniel.services.impl.*ServiceImpl.*(..))"/>
+    </aop:config>
+</beans>

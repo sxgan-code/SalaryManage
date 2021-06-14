@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daniel.mappers.EmpInfoMapper">
+  <resultMap id="BaseResultMap" type="com.daniel.domain.EmpInfo">
+    <!--@Table emp_info-->
+    <id column="empid" jdbcType="INTEGER" property="empid" />
+    <result column="empname" jdbcType="VARCHAR" property="empname" />
+    <result column="empsex" jdbcType="VARCHAR" property="empsex" />
+    <result column="empage" jdbcType="INTEGER" property="empage" />
+    <result column="certid" jdbcType="VARCHAR" property="certid" />
+    <result column="entrydate" jdbcType="DATE" property="entrydate" />
+    <result column="deptid" jdbcType="INTEGER" property="deptid" />
+  </resultMap>
+  <resultMap id="EmpDeptResultMap" type="com.daniel.domain.EmpInfo">
+    <!--@Table emp_info-->
+    <id column="empid" jdbcType="INTEGER" property="empid" />
+    <result column="empname" jdbcType="VARCHAR" property="empname" />
+    <result column="empsex" jdbcType="VARCHAR" property="empsex" />
+    <result column="empage" jdbcType="INTEGER" property="empage" />
+    <result column="certid" jdbcType="VARCHAR" property="certid" />
+    <result column="entrydate" jdbcType="DATE" property="entrydate" />
+    <!--<result column="deptid" jdbcType="INTEGER" property="deptid" />-->
+    <association  property="deptname" column="deptid"  javaType="INTEGER" select="selectDeptName"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    empid, empname, empsex, empage, certid, entrydate, deptid
+  </sql>
+ 
+  <select id="selectDeptName" parameterType="INTEGER" resultType="STRING">
+    select deptname from dept_info where deptid =#{deptid}
+  </select>
+  
+  
+    <select id="selectEmpInfoList" resultMap="EmpDeptResultMap">
+    select * from emp_info e,dept_info d where e.deptid = d.deptid
+  </select>
+  <select id="getEmpCertid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from emp_info
+    where certid = #{certid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLikeName" parameterType="java.lang.String" resultMap="EmpDeptResultMap">
+    select * from emp_info e,dept_info d where e.deptid = d.deptid and e.empname like concat('%',#{empname},'%')
+  </select>
+  <select id="selectEmpDeptByPrimaryKey" parameterType="java.lang.Integer" resultMap="EmpDeptResultMap">
+    select * from emp_info e,dept_info d where e.deptid = d.deptid and empid = #{empid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from emp_info
+    where empid = #{empid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from emp_info
+    where empid = #{empid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="empid" keyProperty="empid" parameterType="com.daniel.domain.EmpInfo" useGeneratedKeys="true">
+    insert into emp_info (empname, empsex, empage, 
+      certid, entrydate, deptid
+      )
+    values (#{empname,jdbcType=VARCHAR}, #{empsex,jdbcType=VARCHAR}, #{empage,jdbcType=INTEGER}, 
+      #{certid,jdbcType=VARCHAR}, #{entrydate,jdbcType=DATE}, #{deptid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="empid" keyProperty="empid" parameterType="com.daniel.domain.EmpInfo" useGeneratedKeys="true">
+    insert into emp_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empname != null">
+        empname,
+      </if>
+      <if test="empsex != null">
+        empsex,
+      </if>
+      <if test="empage != null">
+        empage,
+      </if>
+      <if test="certid != null">
+        certid,
+      </if>
+      <if test="entrydate != null">
+        entrydate,
+      </if>
+      <if test="deptid != null">
+        deptid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empname != null">
+        #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="empsex != null">
+        #{empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="empage != null">
+        #{empage,jdbcType=INTEGER},
+      </if>
+      <if test="certid != null">
+        #{certid,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null">
+        #{entrydate,jdbcType=DATE},
+      </if>
+      <if test="deptid != null">
+        #{deptid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daniel.domain.EmpInfo">
+    update emp_info
+    <set>
+      <if test="empname != null">
+        empname = #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="empsex != null">
+        empsex = #{empsex,jdbcType=VARCHAR},
+      </if>
+      <if test="empage != null">
+        empage = #{empage,jdbcType=INTEGER},
+      </if>
+      <if test="certid != null">
+        certid = #{certid,jdbcType=VARCHAR},
+      </if>
+      <if test="entrydate != null">
+        entrydate = #{entrydate,jdbcType=DATE},
+      </if>
+      <if test="deptid != null">
+        deptid = #{deptid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where empid = #{empid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daniel.domain.EmpInfo">
+    update emp_info
+    set empname = #{empname,jdbcType=VARCHAR},
+      empsex = #{empsex,jdbcType=VARCHAR},
+      empage = #{empage,jdbcType=INTEGER},
+      certid = #{certid,jdbcType=VARCHAR},
+      entrydate = #{entrydate,jdbcType=DATE},
+      deptid = #{deptid,jdbcType=INTEGER}
+    where empid = #{empid,jdbcType=INTEGER}
+  </update>
+</mapper>

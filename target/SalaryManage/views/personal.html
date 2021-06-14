@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>个人信息</title>
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" >
+        <link rel="stylesheet" href="layui/css/layui.css"/>
+        <link rel="stylesheet" href="css/personal.css"/>
+    
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+<!--            头部 列表-->
+            <div th:replace="header :: header"></div>
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <div class="layui-row">
+                    <div class="layui-col-xs4 layui-col-sm12 layui-col-md4">
+                        <div class="grid-demo">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="layui-icon layui-icon-username" style="color: #51c4d3;margin-right: 20px;"></i>基本信息</div>
+                                <div class="layui-panel" style="background:#a6d6d6;">
+                                    <div style="padding: 30px;">
+                                        <div class="personal-info" >员工姓名：<span style="" th:text="${empinfo.getEmpname()}"></span></div><br>
+                                        <div class="personal-info" >员工编号：<span style="" th:text="${empinfo.getEmpid()}"></span></div>
+                                        <div class="personal-info" >员工性别：<span style="" th:text="${empinfo.getEmpsex()}"></span></div>
+                                        <div class="personal-info" >员工年龄：<span style="" th:text="${empinfo.getEmpage()}"></span></div>
+                                        <div class="" style="font-size: 18px; font-family: Arial; line-height: 30px;  display: inline-block;" >身份证号：<span style="" th:text="${empinfo.getCertid()}"></span></div>
+                                        <div class="personal-info" >入职日期：<span style="" th:text="${#dates.format(empinfo.getEntrydate(),'yyyy年MM月dd日')}"></span></div>
+                                        <div class="personal-info" >所在部门：<span style="" th:text="${empinfo.getDeptname()}"></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm7 layui-col-md8">
+                        <div class="grid-demo ">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="layui-icon layui-icon-rmb" style="color: #ff8882;margin-right: 20px;"></i>工资明细</div>
+                                <div class="layui-col-md6" >
+                                    <div class="layui-panel" style="background:#ffe3fe;">
+                                        <div style="padding: 30px;">
+                                            <div class="personal-info" >基础薪资：<span style="" th:text="${salaryinfo.getBasesalary()}"></span></div><br>
+                                            <div class="personal-info" >住房补贴：<span style="" th:text="${salaryinfo.getHousallowance()}"></span></div>
+                                            <div class="personal-info" style="margin-left: 36px;">补贴：<span style="" th:text="${salaryinfo.getSubsidy()}"></span></div>
+                                            <div class="personal-info" style="margin-left: 18px;">养老金：<span style="" th:text="${salaryinfo.getSuperannuation()}"></span></div>
+                                            <div class="personal-info" >加班费：<span style="" th:text="${salaryinfo.getOvertimepay()}"></span></div>
+                                            <div class="personal-info" style="margin-left: 36px;">奖金：<span style="" th:text="${salaryinfo.getBonus()}"></span></div>
+                                            <div class="personal-info" >扣款：<span style="" th:text="${salaryinfo.getFine()}"></span></div>
+                                            <div class="personal-info" >发放时间：<span style="" th:text="${salaryinfo.getDistributiontime()}"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
+                                    <div style="padding: 30px;">
+                                        <div class="panel layui-bg-blue" style="width: 250px;display: inline-block;margin: 8px 0px;">
+                                            <div class="panel-body" style="margin: 10px 20px  ">
+                                                <div class="panel-title">
+                                                    <span class="label pull-right layui-bg-cyan">本月</span>
+                                                    <h5>税前薪资</h5>
+                                                </div>
+                                                <div class="panel-content">
+                                                    <h1 class="no-margins" style="margin: 10px 20px" th:text="${salaryinfo.getSum()+'  ￥'}"></h1>
+                                                    <small>当前分类总记录数</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="panel layui-bg-green" style="width: 250px;display: inline-block;margin: 8px 10px;">
+                                            <div class="panel-body" style="margin: 10px 20px;">
+                                                <div class="panel-title">
+                                                    <span class="label pull-right layui-bg-orange">本月</span>
+                                                    <h5>税后薪资</h5>
+                                                </div>
+                                                <div class="panel-content">
+                                                    <h1 class="no-margins" style="margin: 10px 20px" th:text="${incomeTaxCalculation+'  ￥'}"></h1>
+                                                    <small>当前分类总记录数</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs4 layui-col-sm5 layui-col-md4">
+                        <div class="grid-demo ">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="layui-icon layui-icon-survey" style="color: #29bb89;margin-right: 20px;"></i>个人考勤</div>
+                                <div class="layui-panel" style="background:#d8e3e7;">
+                                    <div style="padding: 30px;">
+                                        <form class="layui-form layui-form-pane" action="addAttend" method="post">
+                                            <div class="layui-form-item">
+                                                <input type="hidden" id="toempid" value="" th:value="${empinfo.getEmpid()}" name="empid" >
+                                                <input type="hidden" name="empname" id="toempname"  readonly="readonly" value="" th:value="${empinfo.getEmpname()}" placeholder=""  autocomplete="off" class="layui-input">
+                                                <label class="layui-form-label">缺勤天数</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="absenteeismday" id="absenteeismday"  placeholder="请输入" th:value="${attendanceData.getAbsenteeismday()}" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">扣款</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="fine" id="fine" th:value="${attendanceData.getFine()}" value=""  placeholder="请输入" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <label class="layui-form-label">缺勤月份</label>
+                                                        <div class="layui-input-inline">
+                                                            <input type="text" name="absenteeismtime" value="" th:value="${salaryinfo.getDistributiontime()}" readonly class="layui-input" id="test1"  placeholder="yyyy-MM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">缺勤说明</label>
+                                                <div class="layui-input-block">
+                                                    <textarea name="descript" id="descript"  th:text="${attendanceData.getDescript()}"  placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                            </div>
+                                            <span style="color:red; font-size: 16px" th:text="${attendMsg}"></span><br>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn sub-but" lay-submit="" lay-filter="demo1">立即提交</button>
+                                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                        <div class="grid-demo ">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="layui-icon layui-icon-note" style="color: #fed049;margin-right: 20px;"></i>个人奖惩</div>
+                                <div class="layui-panel" style="background:#f0e3ca;">
+                                    <div style="padding: 30px;">
+                                        <form class="layui-form layui-form-pane" action="addSanction" method="post">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">奖励金额</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="hidden"   value="" th:value="${empinfo.getEmpid()}" name="empid" >
+                                                    <input type="hidden" name="empname"  readonly="readonly" value="" th:value="${empinfo.getEmpname()}" placeholder="" autocomplete="off" class="layui-input">
+                                                    <input type="number" name="reward" id="reward" th:value="${sanctionData.getReward()}" value=""  placeholder="请输入" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">奖励说明</label>
+                                                <div class="layui-input-block">
+                                                    <textarea name="rewarddescript" id="rewarddescript"  th:text="${sanctionData.getRewarddescript()}" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">扣款金额</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="fine" th:value="${sanctionData.getFine()}" value="" placeholder="请输入" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">扣款说明</label>
+                                                <div class="layui-input-block">
+                                                    <textarea name="finedescript" id="finedescript" th:text="${sanctionData.getFinedescript()}"   placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <label class="layui-form-label">奖罚月份</label>
+                                                        <div class="layui-input-inline">
+                                                            <input type="text" name="sanctiontime" value="" th:value="${salaryinfo.getDistributiontime()}" readonly class="layui-input" id="test2"  placeholder="yyyy-MM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span style="color:red; font-size: 16px" th:text="${sanctionMsg}"></span><br>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn sub-but" lay-submit="" lay-filter="demo1">立即提交</button>
+                                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs6 layui-col-sm6 layui-col-md4">
+                        <div class="grid-demo ">
+                            <div class="layui-card">
+                                <div class="layui-card-header"><i class="layui-icon layui-icon-release" style="color: #93329e;margin-right: 20px;"></i>出差加班</div>
+                                <div class="layui-panel" style="background:#f6dfeb;">
+                                    <div style="padding: 30px;">
+                                        <form class="layui-form layui-form-pane" action="addTravel" method="post">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">出差天数</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="hidden"  value="" th:value="${empinfo.getEmpid()}" name="empid" >
+                                                    <input type="hidden" name="empname" th:value="${empinfo.getEmpname()}"  readonly="readonly" value="" placeholder="请点击员工列表缺勤录入" autocomplete="off" class="layui-input">
+                                                    <input type="number" name="travelday" id="travelday"  placeholder="请输入" autocomplete="off" value="" th:value="${travelData.getTravelday()}" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">出差补贴</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="travelsalary" id="travelsalary" value="" th:value="${travelData.getTravelsalary()}"  placeholder="请输入" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <label class="layui-form-label">出差月份</label>
+                                                        <div class="layui-input-inline">
+                                                            <input type="text" name="traveltime" value="" th:value="${salaryinfo.getDistributiontime()}" readonly class="layui-input" id="test3" placeholder="yyyy-MM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">出差说明</label>
+                                                <div class="layui-input-block">
+                                                    <textarea name="traveldescript" id="traveldescript" th:text="${travelData.getTraveldescript()}"  placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                            </div>
+                                            <span style="color:red; font-size: 16px" th:text="${travelMsg}"></span><br>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn sub-but" lay-submit="" lay-filter="demo1">立即提交</button>
+                                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form class="layui-form layui-form-pane" action="addOvertime" method="post">
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">加班天数</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="hidden" th:value="${salaryinfo.getEmpid()}" value="" name="empid" >
+                                                    <input type="hidden" name="empname" th:value="${salaryinfo.getEmpname()}" readonly="readonly" value="" placeholder="请点击员工列表缺勤录入" autocomplete="off" class="layui-input">
+                                                    <input type="number" name="overtimeday" id="overtimeday" value="" th:value="${overtimeData.getOvertimeday()}"  placeholder="请输入" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item">
+                                                <label class="layui-form-label">加班费</label>
+                                                <div class="layui-input-inline">
+                                                    <input type="number" name="overtimesalary" id="overtimesalary" value=" " th:value="${overtimeData.getOvertimesalary()}"  placeholder="请输入" autocomplete="off" class="layui-input">
+                                                </div>
+                                            </div>
+                                            <div class="layui-form">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <label class="layui-form-label">加班月份</label>
+                                                        <div class="layui-input-inline">
+                                                            <input type="text" name="overtimemonth" value="" th:value="${salaryinfo.getDistributiontime()}" readonly class="layui-input" id="test4" placeholder="yyyy-MM">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="layui-form-item layui-form-text">
+                                                <label class="layui-form-label">加班说明</label>
+                                                <div class="layui-input-block">
+                                                    <textarea name="overtimedescript" id="overtimedescript" th:text="${overtimeData.getOvertimedescript()}"  placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                            </div>
+                                            <span style="color:red; font-size: 16px" th:text="${overtimeMsg}"></span><br>
+                                            <div class="layui-form-item">
+                                                <div class="layui-input-block">
+                                                    <button class="layui-btn sub-but" lay-submit="" lay-filter="demo1">立即提交</button>
+                                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <div class="layui-footer">
+                <!-- 底部固定区域 -->
+                © 基于SSM的企业工资管理系统
+            </div>
+        </div>
+        <script src="layui/layui.js" charset="UTF-8"></script>
+        <script src="js/jquery.js" charset="UTF-8"></script>
+        <script>
+            $(function () {
+            
+            });
+            
+            //JavaScript代码区域
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+        </script>
+    </body>
+</html>

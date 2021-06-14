@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daniel.mappers.SalaryInfoMapper">
+  <resultMap id="BaseResultMap" type="com.daniel.domain.SalaryInfo">
+    <!--@mbg.generated-->
+    <!--@Table salary_info-->
+    <id column="empid" jdbcType="INTEGER" property="empid" />
+    <id column="distributiontime" jdbcType="VARCHAR" property="distributiontime" />
+    <result column="empname" jdbcType="VARCHAR" property="empname" />
+    <result column="basesalary" jdbcType="DECIMAL" property="basesalary" />
+    <result column="subsidy" jdbcType="DECIMAL" property="subsidy" />
+    <result column="housallowance" jdbcType="DECIMAL" property="housallowance" />
+    <result column="superannuation" jdbcType="DECIMAL" property="superannuation" />
+    <result column="overtimepay" jdbcType="DECIMAL" property="overtimepay" />
+    <result column="bonus" jdbcType="DECIMAL" property="bonus" />
+    <result column="fine" jdbcType="DECIMAL" property="fine" />
+    <result column="sum" jdbcType="DECIMAL" property="sum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    empid, distributiontime, empname, basesalary, subsidy, housallowance, superannuation, 
+    overtimepay, bonus, fine, `sum`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from salary_info
+    where empid = #{empid,jdbcType=INTEGER}
+      and distributiontime = #{distributiontime,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    <!--@mbg.generated-->
+    delete from salary_info
+    where empid = #{empid,jdbcType=INTEGER}
+      and distributiontime = #{distributiontime,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.daniel.domain.SalaryInfo">
+    <!--@mbg.generated-->
+    insert into salary_info (empid, distributiontime, empname, 
+      basesalary, subsidy, housallowance, 
+      superannuation, overtimepay, bonus, 
+      fine, `sum`)
+    values (#{empid,jdbcType=INTEGER}, #{distributiontime,jdbcType=VARCHAR}, #{empname,jdbcType=VARCHAR}, 
+      #{basesalary,jdbcType=DECIMAL}, #{subsidy,jdbcType=DECIMAL}, #{housallowance,jdbcType=DECIMAL}, 
+      #{superannuation,jdbcType=DECIMAL}, #{overtimepay,jdbcType=DECIMAL}, #{bonus,jdbcType=DECIMAL}, 
+      #{fine,jdbcType=DECIMAL}, #{sum,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daniel.domain.SalaryInfo">
+    <!--@mbg.generated-->
+    insert into salary_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empid != null">
+        empid,
+      </if>
+      <if test="distributiontime != null">
+        distributiontime,
+      </if>
+      <if test="empname != null">
+        empname,
+      </if>
+      <if test="basesalary != null">
+        basesalary,
+      </if>
+      <if test="subsidy != null">
+        subsidy,
+      </if>
+      <if test="housallowance != null">
+        housallowance,
+      </if>
+      <if test="superannuation != null">
+        superannuation,
+      </if>
+      <if test="overtimepay != null">
+        overtimepay,
+      </if>
+      <if test="bonus != null">
+        bonus,
+      </if>
+      <if test="fine != null">
+        fine,
+      </if>
+      <if test="sum != null">
+        `sum`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empid != null">
+        #{empid,jdbcType=INTEGER},
+      </if>
+      <if test="distributiontime != null">
+        #{distributiontime,jdbcType=VARCHAR},
+      </if>
+      <if test="empname != null">
+        #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="basesalary != null">
+        #{basesalary,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidy != null">
+        #{subsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="housallowance != null">
+        #{housallowance,jdbcType=DECIMAL},
+      </if>
+      <if test="superannuation != null">
+        #{superannuation,jdbcType=DECIMAL},
+      </if>
+      <if test="overtimepay != null">
+        #{overtimepay,jdbcType=DECIMAL},
+      </if>
+      <if test="bonus != null">
+        #{bonus,jdbcType=DECIMAL},
+      </if>
+      <if test="fine != null">
+        #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test="sum != null">
+        #{sum,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daniel.domain.SalaryInfo">
+    <!--@mbg.generated-->
+    update salary_info
+    <set>
+      <if test="empname != null">
+        empname = #{empname,jdbcType=VARCHAR},
+      </if>
+      <if test="basesalary != null">
+        basesalary = #{basesalary,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidy != null">
+        subsidy = #{subsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="housallowance != null">
+        housallowance = #{housallowance,jdbcType=DECIMAL},
+      </if>
+      <if test="superannuation != null">
+        superannuation = #{superannuation,jdbcType=DECIMAL},
+      </if>
+      <if test="overtimepay != null">
+        overtimepay = #{overtimepay,jdbcType=DECIMAL},
+      </if>
+      <if test="bonus != null">
+        bonus = #{bonus,jdbcType=DECIMAL},
+      </if>
+      <if test="fine != null">
+        fine = #{fine,jdbcType=DECIMAL},
+      </if>
+      <if test="sum != null">
+        `sum` = #{sum,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where empid = #{empid,jdbcType=INTEGER}
+      and distributiontime = #{distributiontime,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daniel.domain.SalaryInfo">
+    <!--@mbg.generated-->
+    update salary_info
+    set empname = #{empname,jdbcType=VARCHAR},
+      basesalary = #{basesalary,jdbcType=DECIMAL},
+      subsidy = #{subsidy,jdbcType=DECIMAL},
+      housallowance = #{housallowance,jdbcType=DECIMAL},
+      superannuation = #{superannuation,jdbcType=DECIMAL},
+      overtimepay = #{overtimepay,jdbcType=DECIMAL},
+      bonus = #{bonus,jdbcType=DECIMAL},
+      fine = #{fine,jdbcType=DECIMAL},
+      `sum` = #{sum,jdbcType=DECIMAL}
+    where empid = #{empid,jdbcType=INTEGER}
+      and distributiontime = #{distributiontime,jdbcType=VARCHAR}
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into salary_info
+    (empid, distributiontime, empname, basesalary, subsidy, housallowance, superannuation, 
+      overtimepay, bonus, fine, `sum`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.empid,jdbcType=INTEGER}, #{item.distributiontime,jdbcType=VARCHAR}, #{item.empname,jdbcType=VARCHAR}, 
+        #{item.basesalary,jdbcType=DECIMAL}, #{item.subsidy,jdbcType=DECIMAL}, #{item.housallowance,jdbcType=DECIMAL}, 
+        #{item.superannuation,jdbcType=DECIMAL}, #{item.overtimepay,jdbcType=DECIMAL}, 
+        #{item.bonus,jdbcType=DECIMAL}, #{item.fine,jdbcType=DECIMAL}, #{item.sum,jdbcType=DECIMAL}
+        )
+    </foreach>
+  </insert>
+</mapper>

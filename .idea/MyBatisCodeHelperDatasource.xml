@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MyBatisCodeHelperDatasource">
+    <option name="projectProfile">
+      <ProjectProfile>
+        <option name="batchInsert" value="true" />
+        <option name="generateService" value="true" />
+        <option name="generateServiceInterface" value="true" />
+        <option name="javaMapperPackage" value="com.daniel.mappers" />
+        <option name="javaMapperPath" value="$PROJECT_DIR$/src/main/java" />
+        <option name="javaModelPackage" value="com.daniel.domain" />
+        <option name="javaModelPath" value="$PROJECT_DIR$/src/main/java" />
+        <option name="lastDatabaseCrudChooseModuleName" value="SalaryManage" />
+        <option name="mapperAnnotaion" value="true" />
+        <option name="modelAddToString" value="true" />
+        <option name="moduleNameToPackageAndPathMap">
+          <map>
+            <entry key="SalaryManage">
+              <value>
+                <UserPackageAndPathInfoByModule>
+                  <option name="javaMapperPackage" value="com.daniel.mappers" />
+                  <option name="javaMapperPath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="javaModelPacakge" value="com.daniel.domain" />
+                  <option name="javaModelPath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="javaServiceInterfacePackage" value="com.daniel.services" />
+                  <option name="javaServiceInterfacePath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="javaServicePackage" value="com.daniel.services.impl" />
+                  <option name="javaServicePath" value="$PROJECT_DIR$/src/main/java" />
+                  <option name="xmlPackage" value="com.daniel.mappers" />
+                  <option name="xmlPath" value="$PROJECT_DIR$/src/main/resources" />
+                </UserPackageAndPathInfoByModule>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="p3CComment" value="true" />
+        <option name="tableGenerateConfigs">
+          <map>
+            <entry key="salarymanage:attendance_data">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="AttendanceData" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="salarymanage:dept_info">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="DeptInfo" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="salarymanage:emp_info">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="empid" />
+                  <option name="javaModelName" value="EmpInfo" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="salarymanage:overtime_data">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="OvertimeData" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="salarymanage:salary_info">
+              <value>
+                <TableGenerateConfig>
+                  <option name="batchInsert" value="true" />
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="SalaryInfo" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="salarymanage:sanction_data">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="SanctionData" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+            <entry key="salarymanage:travel_data">
+              <value>
+                <TableGenerateConfig>
+                  <option name="generatedKey" value="" />
+                  <option name="javaModelName" value="TravelData" />
+                  <option name="moduleName" value="SalaryManage" />
+                  <option name="sequenceColumn" value="" />
+                  <option name="sequenceId" value="" />
+                  <option name="useActualColumnName" value="false" />
+                </TableGenerateConfig>
+              </value>
+            </entry>
+          </map>
+        </option>
+        <option name="xmlMapperPackage" value="com.daniel.mappers" />
+        <option name="xmlMapperPath" value="$PROJECT_DIR$/src/main/resources" />
+      </ProjectProfile>
+    </option>
+  </component>
+</project>

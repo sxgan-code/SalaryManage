@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <div th:fragment="header">
+            <div class="layui-header">
+                <div class="layui-logo" style="font-size: 25px;margin-left: 50px">企业工资管理系统</div>
+                <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <img src="img/daniel.jpg" class="layui-nav-img">
+                            <span th:text="${session.loginusername}"></span>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="">基本资料</a></dd>
+                            <dd><a href="">安全设置</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="">状态</a></li>
+                </ul>
+            </div>
+    
+            <div class="layui-side layui-bg-black">
+                <div class="layui-side-scroll">
+                    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                        <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;"><i class="layui-icon layui-icon-cols"
+                                                      style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>权限管理</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="userlist"><i class="layui-icon layui-icon-user"
+                                                          style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>用户管理</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;"><i class="layui-icon layui-icon-cols"
+                                                      style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>人事信息管理</a>
+                            <dl class="layui-nav-child">
+                                
+                                <dd><a href="emplist"><i class="layui-icon layui-icon-user"
+                                                         style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>员工管理</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;"><i class="layui-icon layui-icon-cols" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>工资管理</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="clickOpenAddSalaryPage"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>工资录入</a>
+                                </dd>
+                                <dd><a href="clickOpenSalaryListPage"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>工资列表</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;"><i class="layui-icon layui-icon-cols" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>部门管理</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="openDeptlist"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>部门编辑</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;"><i class="layui-icon layui-icon-cols" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>日常管理</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="openattendlist"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>考勤管理</a>
+                                </dd>
+                                <dd><a href="opensanctionlist"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>奖罚管理</a>
+                                </dd>
+                                <dd><a href="openovertimelist"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>加班管理</a>
+                                </dd>
+                                <dd><a href="opentravellist"><i class="layui-icon layui-icon-list" style="margin-right: 8px; font-size: 14px; color: #cccccc;"></i>出差管理</a>
+                                </dd>
+                    
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script src="js/jquery.js"></script>
+            <script type="text/javascript">
+            
+                
+            </script>
+        </div>
+    </body>
+</html>
